@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tyler_todoapp/components/textFormField.dart';
 import '../utilities/db.dart';
+import '../models/user.dart';
+import '../utilities/dbhelper.dart';
+import 'package:uuid/uuid.dart';
 
 class Test extends StatelessWidget {
-  const Test({Key? key}) : super(key: key);
+  late User user;
+
+  // const Test({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+
 
     final textInputName = TextEditingController();
     final textInputPassword = TextEditingController();
@@ -87,7 +94,14 @@ class Test extends StatelessWidget {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
                             onPressed: () {
-                             
+
+                              var uuid = Uuid();
+                              DatabaseHelper.instance.insertUser(User(
+                                userid: uuid.v4(),
+                                name: textInputName.text,
+                                password: textInputPassword.text,
+                                email: textInputEmail.text
+                              ));
                                 //Need better GUID
                                 // Object idHash = "Tyler1263712784192874";
                                 // var id = identityHashCode(idHash);
@@ -95,10 +109,12 @@ class Test extends StatelessWidget {
                                 // print("ID: " );
                                 // print(id);
                                 //Use model user.dart to update db
+
                                 print(textInputName.text);
                                 print(textInputEmail.text);
                                 print(textInputPassword.text);
                                 print(textInputCfmPassword.text);
+                                print(DatabaseHelper.instance.retrieveUsers());
                                 //InsertUser(User(userid: userid, name: name, password: password, email: email))
                             },
                             child: const Text('Register Account'),

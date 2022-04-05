@@ -3,6 +3,7 @@ class User{
   final String name;
   final String password;
   final String email;
+  static const String TABLENAME = "ACCOUNTS"; //Need to be static to access
   // final DateTime registrationDate;
 
   const User({
